@@ -18,5 +18,10 @@ name = "3"
 path = "3/main.rs"
 test = false
 
+[[bin]]
+name = "4"
+path = "4/main.rs"
+test = false
+
 [dependencies]
 regex = "1.11.1"
