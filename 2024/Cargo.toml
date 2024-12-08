@@ -27,6 +27,10 @@ name = "1"
 path = "1/main.rs"
 
 [[bin]]
+name = "7"
+path = "7/main.rs"
+
+[[bin]]
 name = "3"
 path = "3/main.rs"
 
