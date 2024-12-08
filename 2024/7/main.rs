@@ -18,30 +18,34 @@ fn main() {
 
     let equations = read_as_vec(file_path);
 
-    let results: Vec<i64> = equations.iter().map(|eqn| calibrate(eqn)).collect();
-    println!("{:?}", results);
-
-    let result: i64 = equations.iter().map(|eqn| calibrate(eqn)).sum();
+    let result: i128 = equations.iter().map(|eqn| calibrate(eqn, false)).sum();
+    let concat_result: i128 = equations.iter().map(|eqn| calibrate(eqn, true)).sum();
 
     println!("The total calibration result is {result}.");
-    // calibrate(&equations[0]);
+    println!("The total calibration result is {concat_result} if include concat.");
+    // calibrate(&equations[0], true);
 }
 
-fn calibrate(equation: &String) -> i64 {
+fn calibrate(equation: &String, concat: bool) -> i128 {
     let nums: Vec<&str> = equation.split(':').collect();
-    let target: i64 = nums[0].parse().unwrap();
-    let mut queue: Vec<i64> = vec![];
+    let target: i128 = nums[0].parse().unwrap();
+    let mut queue: Vec<i128> = vec![];
     for numstr in nums[1].split(' ') {
         if numstr.is_empty() { continue; }
-        let num: i64 = numstr.parse().unwrap();
+        let num: i128 = numstr.parse().unwrap();
         if queue.is_empty() { queue.push(num); }
         else {
             let n = queue.len();
             for i in 0..n {
                 queue.push(queue[i] * num);
+                if concat {
+                    queue.push(queue[i] * 10_i128.pow(numstr.len() as u32) + num);
+                }
                 queue[i] += num;
+
             }
         }
+        // println!("{:?}", queue);
     }
     if queue.iter().any(|&x| x == target) { target } else { 0 }
 }
