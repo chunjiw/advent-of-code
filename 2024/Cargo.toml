@@ -3,30 +3,30 @@ name = "aoc2024"
 version = "0.1.0"
 edition = "2021"
 
-[[bin]]
-name = "1"
-path = "1/main.rs"
-test = false
+[dependencies]
+regex = "1.11.1"
 
 [[bin]]
 name = "2"
 path = "2/main.rs"
-test = false
-
-[[bin]]
-name = "3"
-path = "3/main.rs"
-test = false
 
 [[bin]]
 name = "4"
 path = "4/main.rs"
-test = false
+
+[[bin]]
+name = "load-cargo"
+path = "load-cargo/main.rs"
 
 [[bin]]
 name = "8"
 path = "8/main.rs"
-test = false
 
-[dependencies]
-regex = "1.11.1"
+[[bin]]
+name = "1"
+path = "1/main.rs"
+
+[[bin]]
+name = "3"
+path = "3/main.rs"
+
