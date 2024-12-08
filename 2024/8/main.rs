@@ -21,8 +21,39 @@ fn main() {
     let scan = read_as_vec(file_path);
 
     let result = antinodes(&scan);
+    let result2 = antinodes2(&scan);
 
     println!("There are {result} antinodes.");
+    println!("There are {result2} resonant antinodes.");
+}
+
+fn antinodes2(scan: &Vec<String>) -> usize {
+    let (m, n) = (scan.len(), scan[0].len());
+    let mut map = HashMap::new();
+    for (i, row) in scan.iter().enumerate() {
+        for (j, freq) in row.chars().enumerate() {
+            if freq == '.' {
+                continue;
+            }
+            let locations = map.entry(freq).or_insert(vec![]);
+            locations.push((i, j));
+        }
+    }
+    let mut nodes = HashSet::new();
+    for locations in map.values() {
+        for (i, j) in locations.iter() {
+            for (k, l) in locations.iter() {
+                if i == k && j == l { continue; }
+                nodes.insert((*i, *j));
+                let mut d = 1;
+                while (d+1) * k >= d*i && (d+1) * l >= d*j && (d+1) * k < m + d*i && d*l + l < d*j + n {
+                    nodes.insert((d*k + k - d*i, d*l + l - d*j));
+                    d += 1;
+                }
+            }
+        }
+    }
+    nodes.len()
 }
 
 fn antinodes(scan: &Vec<String>) -> usize {
